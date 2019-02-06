@@ -3,8 +3,7 @@ uid maven plugin
 
 This  plugin provides the user-id (UID) and user-gid (GID) of the user executing the build.
 Due  to  the java system itself not providing this information but  only
-the  username,  the plugin gets the property `user.name` of the  systems
-properties.  This  unfortunately  break  the possibility  to  use  the
+the  username  This  unfortunately  break  the possibility  to  use  the
 plugin for non-standard unix-environments.
 
 WARNING
