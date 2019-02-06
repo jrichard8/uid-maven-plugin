@@ -1,4 +1,4 @@
-user-id maven plugin
+uid maven plugin
 ====================
 
 This  plugin provides the user-id (UID) and user-gid (GID) of the user executing the build.
