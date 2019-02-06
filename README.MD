@@ -22,7 +22,7 @@ To enable the plugin add this to your build-plugins in your `pom.xml`.
 <plugin>
   <!-- Plugin only works with unix-like environments, please use it wisely! -->
   <groupId>org.jrichard.util</groupId>
-  <artifactId>user-id-maven-plugin</artifactId>
+  <artifactId>>uid-maven-plugin</artifactId>
   <version>1.0</version>
   <!-- (If you have an idea how I can omit the executions, please contact the author of this plugin) -->
   <executions>
