@@ -4,15 +4,53 @@
 
   <groupId>org.jrichard.util</groupId>
   <artifactId>uid-maven-plugin</artifactId>
-
   <packaging>maven-plugin</packaging>
-
   <version>1.0-SNAPSHOT</version>
 
   <name>uid-maven-plugin Maven Mojo</name>
-
-  <url>http://maven.apache.org</url>
+  <url>http://github.com/jrichard8/uid-maven-plugin</url>
   <description>Provide `user.id` and `group.id` property for unix-like environments.</description>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven-compiler-plugin.version>3.6.2</maven-compiler-plugin.version>
+    <maven-plugin-api.version>3.5.0</maven-plugin-api.version>
+  </properties>
+
+  <scm>
+    <connection>scm:git:http://github.com/jrichard8/uid-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jrichard8/uid-maven-plugin.git</developerConnection>
+    <tag>master</tag>
+    <url>http://github.com/jrichard8/uid-maven-plugin</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>jrichard8</id>
+      <name>Julien RICHARD</name>
+      <email>jrichard8@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <properties>
+        <picUrl>://www.gravatar.com/avatar/e09383f2b8bbfc5f5fa4526a8030f9f5</picUrl>
+      </properties>
+    </developer>
+  </developers>
 
   <dependencies>
 
@@ -23,11 +61,87 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-exec -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-exec</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <version>4.12</version>
+      <scope>compile</scope>
     </dependency>
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>3.5</version>
+        <configuration>
+          <goalPrefix>user-id</goalPrefix>
+          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+        </configuration>
+        <executions>
+          <execution>
+            <id>mojo-descriptor</id>
+            <goals>
+              <goal>descriptor</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>help-goal</id>
+            <goals>
+              <goal>helpmojo</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
