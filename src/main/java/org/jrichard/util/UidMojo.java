@@ -110,7 +110,7 @@ public class UidMojo
         }
     }
 
-    public static class CommandLineOutput {
+    private static class CommandLineOutput {
 
         private final int errCode;
         private final String output;
