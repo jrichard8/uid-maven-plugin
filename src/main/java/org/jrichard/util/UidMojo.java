@@ -25,16 +25,16 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Set a property to the user-uid and user-gid that is running
  * the maven-call.
  */
-@Mojo(name = "user-id", defaultPhase = LifecyclePhase.INITIALIZE)
+@Mojo(name = "user-id", defaultPhase = LifecyclePhase.PACKAGE)
 public class UidMojo
         extends AbstractMojo {
 
@@ -45,35 +45,41 @@ public class UidMojo
     private final static String USER_PARAM = "-u";
     private final static String GROUP_PARAM = "-g";
 
-
     @Parameter(property = "uidPropertyName", defaultValue = "user.uid")
     private String _uidPropertyName;
 
     @Parameter(property = "gidPropertyName", defaultValue = "user.gid")
     private String _gidPropertyName;
 
+    @Parameter(defaultValue = "${project}")
+    private MavenProject project;
+
     public void execute() throws MojoExecutionException {
+
+        getLog().debug("Start uid-maven-plugin with param:");
+        getLog().debug("uidPropertyName: " + _uidPropertyName);
+        getLog().debug("gidPropertyName: " + _gidPropertyName);
 
         try {
             final String uid = getId(USER_PARAM);
             final String gid = getId(GROUP_PARAM);
-            final Properties props = new Properties();
-            props.setProperty(_uidPropertyName, uid);
-            props.setProperty(_gidPropertyName, gid);
-            System.setProperties(props);
+            project.getProperties().setProperty(_uidPropertyName, uid);
+            project.getProperties().setProperty(_gidPropertyName, gid);
         } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+        getLog().debug("Finish id-maven-plugin with SUCCESS ...");
     }
 
     private String getId(String param) throws IOException, MojoExecutionException {
+        getLog().debug("getId: " + param);
         final CommandLine cmdLine = CommandLine.parse(ID_CMD);
         cmdLine.addArgument(param);
         final CommandLineOutput commandLineOutput = executeCommandLine(cmdLine);
-        if (commandLineOutput.errCode == SUCCESS_CODE) {
-            return commandLineOutput.output;
+        if (commandLineOutput.getErrCode() == SUCCESS_CODE) {
+            return commandLineOutput.getOutput();
         }
-        throw new MojoExecutionException("Unable to invoke \"id -u\" command");
+        throw new MojoExecutionException("Unable to invoke \"" + ID_CMD + " " + param +"\" command");
     }
 
     private CommandLineOutput executeCommandLine(CommandLine cmdLine) throws IOException {
@@ -130,5 +136,9 @@ public class UidMojo
 
     public void setUidPropertyName(String uidPropertyName) {
         this._uidPropertyName = uidPropertyName;
+    }
+
+    public void setProject(MavenProject project) {
+        this.project = project;
     }
 }
