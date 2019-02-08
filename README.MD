@@ -70,3 +70,4 @@ Links
  - [Info](https://github.com/jrichard8/uid-maven-plugin)
  - [Github](https://github.com/jrichard8/uid-maven-plugin)
  - [Bugs](https://github.com/jrichard8/uid-maven-plugin/issues)
+ - [![Build Status](https://travis-ci.org/jrichard8/uid-maven-plugin.svg?branch=master)](https://travis-ci.org/jrichard8/uid-maven-plugin)
