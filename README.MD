@@ -3,8 +3,9 @@ uid maven plugin
 
 This  plugin provides the user-id (UID) and user-gid (GID) of the user executing the build.
 Due  to  the java system itself not providing this information but  only
-the  username  This  unfortunately  break  the possibility  to  use  the
-plugin for non-standard unix-environments.
+the  username.  
+This  unfortunately  break  the possibility  to  use  the
+plugin on non-standard unix-environments.
 
 WARNING
 -------
@@ -20,8 +21,8 @@ To enable the plugin add this to your build-plugins in your `pom.xml`.
 ``` xml
 <plugin>
   <!-- Plugin only works with unix-like environments, please use it wisely! -->
-  <groupId>org.jrichard.util</groupId>
-  <artifactId>>uid-maven-plugin</artifactId>
+  <groupId>com.traxens.util</groupId>
+  <artifactId>uid-maven-plugin</artifactId>
   <version>1.0</version>
   <!-- (If you have an idea how I can omit the executions, please contact the author of this plugin) -->
   <executions>
@@ -34,7 +35,7 @@ To enable the plugin add this to your build-plugins in your `pom.xml`.
 </plugin>
 ```
 
-Now you can use `${user.id}` within your `pom.xml`.  
+Now you can use `${user.uid}` and `${user.gid}` within your `pom.xml`.  
 
 Configuration
 -------------
@@ -69,4 +70,3 @@ Links
  - [Info](https://github.com/jrichard8/uid-maven-plugin)
  - [Github](https://github.com/jrichard8/uid-maven-plugin)
  - [Bugs](https://github.com/jrichard8/uid-maven-plugin/issues)
- - [![Build Status](https://github.com/jrichard8/uid-maven-plugin.svg?branch=master)](https://travis-ci.org/rynr/user-id-maven-plugin) [![Javadocs](https://www.javadoc.io/badge/org.rjung.util/user-id-maven-plugin.svg)](https://www.javadoc.io/doc/org.rjung.util/user-id-maven-plugin)
